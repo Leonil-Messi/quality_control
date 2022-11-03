@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="${ctxPath}/assets/expand/images/favicon.ico" rel="icon">
+    <title>第二页</title>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/module/admin.css?v=318">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .header{
+            padding:0;
+            height: 80px;
+            background-color: #00a0e9;
+        }
+        .titleall{
+            height: 30px;
+            margin: 0;
+        }
+        h2{
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin: 0;
+        }
+        h3{
+            margin: 0;
+            font-weight: bold;
+        }
+        .fence{
+            width: 1000px;
+            margin: auto;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: space-around;
+        }
+        .sx{
+            width: 2px;
+            height: 20px;
+            background:white;
+        }
+        .box{
+            height:100%;
+            width: 99%;
+            margin-top: 2%;
+            background-color: white;
+        }
+        .box1{
+            width: 1485px;
+            height: 70px;
+            margin: auto;
+        }
+        button{
+            text-align: center;
+            line-height: 70px;
+            margin-top: 20px;
+        }
+        .layui-btn{
+            width: 200px;
+            height: 38px;
+        }
+        .one{
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="titleall">
+        <h2>质量问题原因辅助分析原型系统</h2>
+    </div>
+    <hr style="color: white;">
+    <div class="fence">
+        <h3 style="cursor:pointer;" onclick="javascrtpt:jump1()">质量问题及相关数据</h3>
+        <div class="sx"></div>
+        <h3 style="color: #FFDEAD;">分析框架</h3>
+        <div class="sx"></div>
+        <h3 style="cursor:pointer;" onclick="javascrtpt:jump()">质量问题原因推测</h3>
+    </div>
+</div>
+<div id="one" class="boxx" style="width: 100%;height:100%;position:absolute;top: 80px;background-color: white;z-index:9999">
+    <div class = "b" style="position:absolute;right: 350px;">
+        <button class="layui-btn layui-btn-radius" onclick="toDeploy()">配置参数</button>
+    </div>
+    <div class = "box">
+        <div class="box1 one">
+            <button id="b2"  class="layui-btn layui-btn-normal layui-btn-radius" style="padding:0px;font-size: 10px;text-align: center" onclick="change()">质量问题涉及到的机型</a></button>
+            <button id="b22" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change1()">故障件种类随时间变化情况</button>
+            <button id="b24" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change2()">故障件名称随时间变化情况</button>
+            <button id="b21" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change3()">故障件种类</button>
+            <button id="b23" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change4()">故障件名称</button>
+            <button id="b25" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change5()">故障件型号</button>
+            <button id="b32" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change6()" style="font-size: 10px;">故障件制造批次随时间变化情况</button>
+        </div>
+        <div class="box1">
+            <button id="b30" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change7()">故障件制造单位</button>
+            <button id="b31" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change8()">故障件制造批次</button>
+            <button id="b33" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change9()">故障件出厂时间</button>
+            <button id="b35" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change10()">故障件制造人员</button>
+            <button id="b39" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change11()">关键件制造单位</button>
+            <button id="b40" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change12()">关键件制造批次</button>
+            <button id="b38" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change13()">关键件名称</button>
+        </div>
+        <div class="box1">
+            <button id="b43" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change14()">关键件检测设备校准情况</button>
+            <button id="b46" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change15()">试验种类</button>
+            <button id="b42" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change16()">关键件检测结果</button>
+            <button id="b44" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change17()">关键件检测人员</button>
+            <button id="b45" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change18()">关键件检测设备</button>
+            <button id="b48" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change19()">实测种类</button>
+            <button id="b12" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change20()" style="font-size: 10px;">质量问题故障模式随时间变化情况</button>
+        </div>
+        <div class="box1">
+            <button id="b6"  class="layui-btn layui-btn-normal layui-btn-radius" onclick="change21()" style="font-size: 10px;">质量问题涉及到的机型使用情况</button>
+            <button id="b41" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change22()">关键件出厂时间</button>
+            <button id="b15" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change23()">装备制造单位</button>
+            <button id="b16" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change24()">装备制造批次</button>
+            <button id="b5"  class="layui-btn layui-btn-normal layui-btn-radius" onclick="change25()">装备部署情况</button>
+            <button id="b7"  class="layui-btn layui-btn-normal layui-btn-radius" onclick="change26()">装备改型情况</button>
+            <button id="b13" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change27()">质量问题发生地理环境</button>
+        </div>
+        <div class="box1">
+            <button id="b26" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change28()">故障件型号随时间变化情况</button>
+            <button id="b3"  class="layui-btn layui-btn-normal layui-btn-radius" onclick="change29()" style="font-size: 10px;">质量问题发生机型随时间变化情况</button>
+            <button id="b1"  class="layui-btn layui-btn-normal layui-btn-radius" onclick="change30()">质量问题发生时间</button>
+            <button id="b11" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change31()">质量问题故障模式</button>
+            <button id="b4"  class="layui-btn layui-btn-normal layui-btn-radius" onclick="change32()">质量问题涉及到的部队</button>
+            <button id="b36" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change33()">故障件加工设备</button>
+            <button id="b37" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change34()">故障件原材料</button>
+        </div>
+        <div class="box1">
+            <button id="b34" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change35()">故障件使用时长</button>
+            <button id="b29" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change36()">故障件性能参数</button>
+            <button id="b14" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change37()">质量问题执行任务</button>
+            <button id="b8"  class="layui-btn layui-btn-normal layui-btn-radius" onclick="change38()">故障件改型情况</button>
+            <button id="b19" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change39()">装备大修情况</button>
+            <button id="b20" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change40()">装备维修人员</button>
+            <button id="b17" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change41()">装备制造批次随时间变化情况</button>
+        </div>
+        <div class="box1">
+            <button id="b18" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change42()">装备出厂时间</button>
+            <button id="b10" class="layui-btn layui-btn-normal layui-btn-radius" onclick="change43()">相似故障件情况</button>
+            <button id="b9"  class="layui-btn layui-btn-normal layui-btn-radius" onclick="change44()">相似机型情况</button>
+            <button id="b49" class="layui-btn layui-btn-normal layui-btn-radius">实测参数</button>
+            <button id="b28" class="layui-btn layui-btn-normal layui-btn-radius">故障件安装方法</button>
+            <button id="b47" class="layui-btn layui-btn-normal layui-btn-radius">试验输入</button>
+            <button id="b27" class="layui-btn layui-btn-normal layui-btn-radius">故障件安装位置</button>
+        </div>
+
+    </div>
+</div>
+
+<div style="width: 100%;height:100%;position:absolute;top: 80px;background-color: white;z-index:1">
+    <button class="layui-btn layui-btn-radius" style="position: absolute;top: 3px;right: 200px;" onclick="back()">返回框架</button>
+    <iframe id="ifrID" src="" width="100%" height="100%" style="overflow: hidden;border: none;"></iframe>
+</div>
+
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=318"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" async="" src="${ctxPath}\assets\common\js\ga.js"></script>
+<script src="${ctxPath}\assets\common\js\shim.js"></script>
+<script src="${ctxPath}\assets\common\js\xlsx.full.min.js"></script>
+<script src="${ctxPath}\assets\common\js\jquery.js"></script>
+<script type="text/javascript">
+    function jump(){
+        window.location.href="${ctxPath}/jump/toThird";
+    };
+    function jump1(){
+        window.location.href="${ctxPath}/jump/toFirst";
+    };
+    $(document).ready(function () {
+        $.ajax({
+            url: "${ctxPath}/jump/judge",
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                for(var i = 0;i<data.length;i++){
+                    // document.getElementById("b"+data[i].tableId).style.background = "red";
+                    var a = "#"+"b"+data[i].tableId;
+                    $(a).css({background:"red"});
+                }
+            },
+        })
+    })
+    function change(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem2";
+    }
+    function change1(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem22";
+    }
+    function change2(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem24";
+    }
+    function change3(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem21";
+    }
+    function change4(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem23";
+    }
+    function change5(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem25";
+    }
+    function change6(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem32";
+    }
+    function change7(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem30";
+    }
+    function change8(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem31";
+    }
+    function change9(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem33";
+    }
+    function change10(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem35";
+    }
+    function change11(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem39";
+    }
+    function change12(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem40";
+    }
+    function change13(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem38";
+    }
+    function change14(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem43";
+    }
+    function change15(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem46";
+    }
+    function change16(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem42";
+    }
+    function change17(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem44";
+    }
+    function change18(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem45";
+    }
+    function change19(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem48";
+    }
+    function change20(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem12";
+    }
+    function change21(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem6";
+    }
+    function change22(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem41";
+    }
+    function change23(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem15";
+    }
+    function change24(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem16";
+    }
+    function change25(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem5";
+    }
+    function change26(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem7";
+    }
+    function change27(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem13";
+    }
+    function change28(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem26";
+    }
+    function change29(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem3";
+    }
+    function change30(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem1";
+    }
+    function change31(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem11";
+    }
+    function change32(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem4";
+    }
+    function change33(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem36";
+    }
+    function change34(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem37";
+    }
+    function change35(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem34";
+    }
+    function change36(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem29";
+    }
+    function change37(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem14";
+    }
+    function change38(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem8";
+    }
+    function change39(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem19";
+    }
+    function change40(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem20";
+    }
+    function change41(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem17";
+    }
+    function change42(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem18";
+    }
+    function change43(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem10";
+    }
+    function change44(){
+        document.getElementById("one").style.zIndex=-1;
+        document.getElementById("ifrID").style.zIndex=9999;
+        document.getElementById("ifrID").src="${ctxPath}/view/problem9";
+    }
+    function toDeploy(){
+        window.location.href="${ctxPath}/jump/toDeploy";
+    }
+
+
+    var btnId = null;
+    $(document).ready (function(){
+        $(".layui-btn").bind ("click" , function(){
+            btnId= $(this).attr('id');
+        })
+    });
+    function back(){
+        $.ajax({
+            url: "${ctxPath}/jump/judge",
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                for(var i = 0;i<data.length;i++){
+                    // document.getElementById("b"+data[i].tableId).style.background = "red";
+                    var a = "#"+"b"+data[i].tableId;
+                    $(a).css({background:"red"});
+                }
+            },
+        })
+        document.getElementById("one").style.zIndex=9999;
+        document.getElementById("ifrID").style.zIndex=-1;
+    }
+</script>
+</body>
+</html>

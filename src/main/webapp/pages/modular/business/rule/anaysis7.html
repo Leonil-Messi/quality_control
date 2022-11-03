@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>${constants.getSystemName()}</title>
+    <link rel="stylesheet" href="/assets/common/libs/layui/css/layui.css?v=${constants.getReleaseVersion()}"/>
+    <link rel="stylesheet" href="/assets/common/module/admin.css?v=${constants.getReleaseVersion()}"/>
+    <style>
+        .numberInfoSubTitle {
+            color: rgba(0, 0, 0, .45);
+            font-size: 14px;
+            height: 22px;
+            line-height: 22px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-break: break-all;
+        }
+
+        .numberInfoValue {
+            color: rgba(0, 0, 0, .85);
+            font-size: 24px;
+            margin-top: 10px;
+            height: 32px;
+            line-height: 32px;
+        }
+
+        .numberInfoSuffix {
+            color: rgba(0, 0, 0, .65);
+            font-size: 16px;
+            font-style: normal;
+            margin-left: 4px;
+            line-height: 32px;
+        }
+
+        .header{
+            padding:0;
+            height: 80px;
+            background-color: #00a0e9;
+        }
+        .titleall{
+            height: 30px;
+            margin: 0;
+        }
+        h2{
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin: 0;
+        }
+        h3{
+            margin: 0;
+            font-weight: bold;
+        }
+        .fence{
+            width: 1000px;
+            margin: auto;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: space-around;
+        }
+        .sx{
+            width: 2px;
+            height: 20px;
+            background:white;
+        }
+        /* .box{
+            height: 660px;
+            width: 100%;
+        } */
+        .boxx{
+            width: 85%;
+            height: 630px;
+            position: absolute;
+            left: 200px;
+            top: 80px;
+        }
+        .box1{
+            width: 99%;
+            height: 100px;
+            margin-left: 0.5%;
+            margin-top: 10px;
+            border-radius: 2%;
+            border:1px solid #00a0e9;
+            padding-top: 10px;
+        }
+        .box2{
+            width: 99%;
+            /*height: 100px;*/
+            margin-left: 0.5%;
+            margin-top: 10px;
+            border-radius: 2%;
+            border:1px solid #00a0e9;
+            padding-top: 10px;
+        }
+        .box3{
+            width: 99%;
+            margin-left: 0.5%;
+            margin-top: 10px;
+            border-radius: 2%;
+            border:1px solid #00a0e9;
+            padding-top: 10px;
+        }
+        .current{
+            background-color:#009686;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+<div class = "box1">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-bottom: 0px;">
+        <legend>推测依据</legend>
+    </fieldset>
+    <div class="layui-field-box" style="margin-left: 50px;font-size: 20px;">
+        疲劳试验不充分
+    </div>
+</div>
+<div class="box2">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-bottom: 0px;">
+        <legend>判明准则</legend>
+    </fieldset>
+    <div class="layui-field-box" style="margin-left: 50px;font-size: 20px;">
+        质量问题在某一使用时间段内集中爆发
+    </div>
+</div>
+<div class="box3">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-bottom: 0px;">
+        <legend>依据来源</legend>
+    </fieldset>
+<!--    <table id="demo" lay-filter="test"></table>-->
+    <div class="layui-field-box" style="margin: 20px">
+        <div id="example">
+            <div class="layui-card" v-for="item in dataList">
+                <div class="layui-card-header">故障使用时长爆发期：{{item.faultpartsDeliverytime}}</div>
+                <div class="layui-card-body">
+                    机型：{{item.jx}}<br>
+                    故障件种类：{{item.faultypartsType}}<br>
+                    故障件名称：{{item.faultypartsTitle}}<br>
+                </div>
+            </div>
+        </div>
+<!--        <table id="demo" lay-filter="test"></table>-->
+    </div>
+</div>
+
+
+
+<!-- js部分 -->
+@/* 加入contextPath属性和session超时的配置 */
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+
+
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+<script src="${ctxPath}/assets/common/libs/echarts/echarts.min.js?v=${constants.getReleaseVersion()}"></script>
+<script src="${ctxPath}/assets/common/libs/echarts/echartsTheme.js?v=${constants.getReleaseVersion()}"></script>
+
+<script src="${ctxPath}/assets/common/libs/vue.js"></script>
+
+<script>
+    var vm = new Vue({
+        el: '#example',
+        data: {
+            dataList: []
+        }
+    })
+
+    layui.use(['layer', 'element','HttpRequest','table'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var element = layui.element;
+        var table = layui.table;
+
+        var HttpRequest = layui.HttpRequest;
+        var myRequest = new HttpRequest("/rule/predict7", 'post', function (data) {
+            // 这里写请求成功的回调
+            console.log(data)
+            vm.$data.dataList = data.data
+
+        }, function (data) {
+            // 这里写请求失败的回调（一般为http状态码为非200）
+        });
+        myRequest.start(true);
+        //第一个实例
+        // table.render({
+        //     elem: '#demo'
+        //
+        //     ,url: '${ctxPath}/rule/predict8' //数据接口
+        //     ,page: true //开启分页
+        //     ,cols: [[ //表头
+        //         {field: 'qualityId', title: 'Id',  sort: true, fixed: 'left'}
+        //         ,{field: 'title', title: '标题'}
+        //         ,{field: 'jx', title: '机型', sort: true}
+        //         ,{field: 'zbUnit', title: '单元'}
+        //         ,{field: 'zbBatch', title: '批次'}
+        //     ]]
+        // });        var HttpRequest = layui.HttpRequest;
+
+        // var dataList = []
+        // //获取数据
+        // // 发起http调用，第一个构造参数是请求的url，第二个参数是http method，第三个参数是请求成功回调，第四个是请求失败回调
+        // var myRequest = new HttpRequest("/new1qualityProblemData/problem16", 'post', function (data) {
+        //     // 这里写请求成功的回调
+        //     console.log(data)
+        //
+        //     for (let i = 0; i < data.data.length; i++) {
+        //         dataList.push(data.data[i])
+        //     }
+        //
+        // }, function (data) {
+        //     // 这里写请求失败的回调（一般为http状态码为非200）
+        // });
+        // myRequest.start(true);
+
+
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="guns@localhost" uuid="de4275e3-e78c-4748-aa4c-973103e945b8">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/guns</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="guns_flight_quality_control@47.99.65.198" uuid="521ef983-c70f-4217-8acb-8f6c478752fa">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://47.99.65.198:3306/guns_flight_quality_control</jdbc-url>
+    </data-source>
+  </component>
+</project>

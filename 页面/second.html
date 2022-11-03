@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="${ctxPath}/assets/expand/images/favicon.ico" rel="icon">
+    <title>第二页</title>
+    <link rel="stylesheet" href="F:\mmyprogram\program1guns\页面\layui\css\layui.css"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/module/admin.css?v=318">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .header{
+            padding:0;
+            height: 80px;
+            background-color: #00a0e9;
+        }
+        .titleall{
+            height: 30px;
+            margin: 0;
+        }
+        h2{
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin: 0;
+        }
+        h3{
+            margin: 0;
+            font-weight: bold;
+        }
+        .fence{
+            width: 1000px;
+            margin: auto;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: space-around;
+        }
+        .sx{
+            width: 2px;
+            height: 20px;
+            background:white;
+        }
+        /* .box{
+            height: 660px;
+            width: 200px;
+            margin: 0;
+            background-color: #00a0e9;
+        } */
+        .box{
+            height:200px;
+            width: 1000px;
+
+        }
+        .box1{
+            height: 640px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+        .box1::-webkit-scrollbar {
+            display: none;
+        }
+        .box2{
+            width: 1300px;
+            height: 640px;
+            position: absolute;
+            left: 200px;
+            top: 80px;
+        }
+        .box22{
+            width:1300px;
+            height:460px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+        .box22::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="titleall">
+        <h2>质量问题原因辅助分析原型系统</h2>
+    </div>
+    <hr style="color: white;">
+    <div class="fence">
+        <h3 onclick="javascrtpt:jump1()">质量问题及相关数据</h3>
+        <div class="sx"></div>
+        <h3 style="color: #FFDEAD;">分析框架</h3>
+        <div class="sx"></div>
+        <h3 onclick="javascrtpt:jump()">质量问题推测</h3>
+    </div>
+</div>
+
+<div class="box">
+    <div style="width: 200px;height: 1px;background-color: white"></div>
+    <div class="box1">
+        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="demo" style="margin-right: 10px;background-color:#00a0e9 ;width: 20%;">
+            <li class="layui-nav-item"><a href="javascript:void(0);" onclick="change()">质量问题发生时间</a></li>
+            <li class="layui-nav-item"><a href="javascript:void(0);" onclick="change2()">质量问题涉及到的机型</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">质量问题发生机型随时间变化情况</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">质量问题涉及到的部队</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">装备部署情况</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">质量问题涉及到的机型使用情况</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">装备改型情况</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">相似机型情况</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">相似故障件情况</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">质量问题故障模式</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">质量问题故障模式随时间变化情况</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">质量问题发生地理环境</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">质量问题执行任务随时间变化趋势</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">装备制造单位</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">装备制造批次</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">装备制造批次随时间变化情况</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">装备出厂时间</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">装备大修情况</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">装备维修人员</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">故障件种类</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">故障件种类随时间变化情况</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">故障件名称</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">故障件名称随时间变化情况</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">故障件型号</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">故障件型号随时间变化情况</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">故障件安装位置</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">故障件安装方法</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">故障件性能参数</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">故障件制造单位</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">故障件制造批次</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">故障件制造批次随时间变化情况</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">故障件出厂时间</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">故障件使用时长</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">故障件制造人员</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">故障件加工设备</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">故障件原材料</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">关键件名称</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">关键件制造单位</a></li>
+            <li class="layui-nav-item"><a href="javascript:void(0);" onclick="change40()">关键件制造批次</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">关键件出厂时间</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">关键件检测结果</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">关键件检测设备校准情况</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">关键件检测人员</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">关键件检测设备</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">试验种类</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">试验输入</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">实测种类</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">实测参数</a></li>
+        </ul>
+    </div>
+    <div class="box2">
+        <div class="box22">
+            <iframe id="ifrID" src="${ctxPath}/view/problem40" width="1300px" height="460px" style="overflow: hidden;border: none;margin-left: 30px;"></iframe>
+        </div>
+
+        <!-- <img style="margin-left: 30px;" src="./img/1.png" alt=""> -->
+        <hr class="layui-border-blue" style="width: 1220px;margin-left: 20px;">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-bottom: 0px;margin-left: 20px;">
+            <legend>质量问题</legend>
+        </fieldset>
+        <div class="layui-field-box" style="margin-left: 50px;font-size: 20px;">
+            无
+        </div>
+    </div>
+    </div>
+</div>
+<script type="text/javascript" src="F:\mmyprogram\program1guns\页面\layui\layui.js"></script>
+<script type="text/javascript">
+    function jump(){
+        window.location.href="${ctxPath}/jump/toThird";
+    };
+    function jump1(){
+        window.location.href="${ctxPath}/jump/toFirst";
+    };
+    function change(){
+        document.getElementById("ifrID").src="${ctxPath}/view/problem1";
+    }
+    function change2(){
+        document.getElementById("ifrID").src="${ctxPath}/view/problem2";
+    }
+    function change40(){
+        document.getElementById("ifrID").src="${ctxPath}/view/problem40";
+    }
+</script>
+</body>
+</html>

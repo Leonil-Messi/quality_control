@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>第一页</title>
+    <script type="text/javascript" src="${ctxPath}/assets/config.js"></script>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/libs/layui/css/layui.css"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .header{
+            padding:0;
+            height: 80px;
+            background-color: #00a0e9;
+        }
+        .titleall{
+            height: 30px;
+            margin: 0;
+        }
+        h2{
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin: 0;
+        }
+        h3{
+            margin: 0;
+            font-weight: bold;
+        }
+        .fence{
+            width: 1000px;
+            margin: auto;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: space-around;
+        }
+        .sx{
+            width: 2px;
+            height: 20px;
+            background:white;
+        }
+        .bigbox{
+            height: 630px;
+            width: 100%;
+            padding-top: 10px;
+            background-color:#DCDCDC;
+        }
+        .bb{
+            height: 200px;
+            width: 99%;
+            margin-left: 0.5%;
+            border-radius: 2%;
+            background-color: white;
+            padding-top: 30px;
+        }
+        .box{
+            text-align: center;
+            margin-top: 20px;
+            /*line-height: 100px;*/
+        }
+        .shbian{
+            /* text-align: center;
+            height: 60px;
+            line-height: 60px;
+            width: 160px;
+            cursor: pointer */
+        }/*基本的样式*/
+        .active{
+            color: white;
+            background: #00BFFF;
+            box-shadow: 0 0 10 #000000;
+            border-radius: 6px;
+            border: none;
+        }/*一个样式*/
+        .boxx{
+            height: 390px;
+            width: 99%;
+            margin-top: 10px;
+            padding-top: 20px;
+            margin-left: 0.5%;
+            border-radius: 2%;
+            background-color: white;
+        }
+        .current{
+            background-color: #2d8cf0;
+            color: white;
+        }
+    </style>
+</head>
+<body onload='load()'>
+<div class="header">
+    <div class="titleall">
+        <h2>质量问题原因辅助分析原型系统</h2>
+    </div>
+    <hr style="color: white;">
+    <div class="fence">
+        <h3 style="color: #FFDEAD;">质量问题及相关数据</h3>
+        <div class="sx"></div>
+        <h3 style="cursor:pointer;" onclick="jump()">分析框架</h3>
+        <div class="sx"></div>
+        <h3 style="cursor:pointer;" onclick="jump1()">质量问题原因推测</h3>
+    </div>
+</div>
+<div class="bigbox">
+    <div class='bb'>
+        <fieldset class="layui-elem-field layui-field-title" style="margin-bottom: 0px;">
+            <legend>质量问题及相关数据</legend>
+        </fieldset>
+        <div class="box">
+            <button id="b1" class="shbian layui-btn layui-btn-primary layui-border-blue" style="margin-left: 0px;">质量问题数据</button>
+            <button id="b2" class="shbian layui-btn layui-btn-primary layui-border-blue" style="margin-left: 0px;">装备设计数据</button>
+            <button id="b3" class="shbian layui-btn layui-btn-primary layui-border-blue" style="margin-left: 0px;">成品件设计数据</button>
+            <button id="b4" class="shbian layui-btn layui-btn-primary layui-border-blue" style="margin-left: 0px;">关键件设计数据</button>
+            <button id="b5" class="shbian layui-btn layui-btn-primary layui-border-blue" style="margin-left: 0px;">成品件制造数据</button>
+            <button id="b6" class="shbian layui-btn layui-btn-primary layui-border-blue" style="margin-left: 0px;">关键件制造数据</button>
+            <button id="b7" class="shbian layui-btn layui-btn-primary layui-border-blue" style="margin-left: 0px;">故障件试验数据</button>
+            <button id="b8" class="shbian layui-btn layui-btn-primary layui-border-blue" style="margin-left: 0px;">装备部署数据</button>
+            <button id="b9" class="shbian layui-btn layui-btn-primary layui-border-blue" style="margin-left: 0px;">装备使用数据</button><br>
+            <div id="t1" class="shbian layui-btn layui-btn-primary layui-border-blue"style="margin-left: 0px;margin-top: 10px"></div>
+            <div id="t2" class="shbian layui-btn layui-btn-primary layui-border-blue"style="margin-left: 50px;margin-top: 10px"></div>
+            <div id="t3" class="shbian layui-btn layui-btn-primary layui-border-blue"style="margin-left: 50px;margin-top: 10px"></div>
+            <div id="t4" class="shbian layui-btn layui-btn-primary layui-border-blue"style="margin-left: 50px;margin-top: 10px"></div>
+            <div id="t5" class="shbian layui-btn layui-btn-primary layui-border-blue"style="margin-left: 50px;margin-top: 10px"></div>
+            <div id="t6" class="shbian layui-btn layui-btn-primary layui-border-blue"style="margin-left: 50px;margin-top: 10px"></div>
+            <div id="t7" class="shbian layui-btn layui-btn-primary layui-border-blue"style="margin-left: 50px;margin-top: 10px"></div>
+            <div id="t8" class="shbian layui-btn layui-btn-primary layui-border-blue"style="margin-left: 50px;margin-top: 10px"></div>
+            <div id="t9" class="shbian layui-btn layui-btn-primary layui-border-blue"style="margin-left: 50px;margin-top: 10px"></div><br>
+            <input type="file" id="uploadfile"style="display:none" onchange="showfile(this)">
+            <button type="button" onclick="F_Open_dialog()" class="sc layui-btn" id="test3" style="margin-top: 10px"><i class="layui-icon"></i>上传文件</button>
+            <button type="button" class="xq layui-btn layui-btn-normal" style="margin-top: 10px">详情</button>
+            <button type="button" onclick="Download()" class="aq layui-btn layui-btn-normal" style="margin-top: 10px">下载模板</button>
+        </div>
+    </div>
+
+    <div class="boxx">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-bottom: 0px;">
+            <legend>数据内容</legend>
+        </fieldset>
+        <hr class="layui-border-blue" style="width: 1220px;margin-left: 20px;">
+        <table style="width: 90%;margin-left: 10px;" class="layui-table" id="layui_table_id" lay-filter="dataTable"></table>
+    </div>
+</div>
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.all.js"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+<script src="${ctxPath}/assets/common/libs/echarts/echarts.min.js?v=${constants.getReleaseVersion()}"></script>
+<script src="${ctxPath}/assets/common/libs/echarts/echartsTheme.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/jquery/jquery-3.2.1.min.js"></script>
+<script src="${ctxPath}/assets/common/libs/vue.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" async="" src="${ctxPath}/assets/common/js/ga.js"></script>
+<script src="${ctxPath}/assets/common/js/shim.js"></script>
+<script src="${ctxPath}/assets/common/js/xlsx.full.min.js"></script>
+<script src="${ctxPath}/assets/common/js/jquery.js"></script>
+<script src="${ctxPath}/assets/common/js/jquery-1.7.1.min.js"></script>
+<script src="${ctxPath}/assets/common/js/jquery.i18n.properties-1.0.9.js"></script>
+<script type="text/javascript">
+    function load(){
+        read("t1")
+        read("t2")
+        read("t3")
+        read("t4")
+        read("t5")
+        read("t6")
+        read("t7")
+        read("t8")
+        read("t9")
+    }
+    function read(a){
+        layui.use(['layer', 'form', 'table', 'util', 'admin', 'func', 'HttpRequest'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var table = layui.table;
+            var admin = layui.admin;
+            var HttpRequest = layui.HttpRequest;
+            var func = layui.func;
+            var b=""
+            $.ajax({
+                contentType: 'application/json;charset=UTF-8',
+                type: "POST",
+                dataType: "json",
+                url: "/Properties/read?key="+a,
+                success: function (data) {
+                    if(data==0){
+                        document.getElementById(a).innerHTML = "未上传";
+                    }else{
+                        document.getElementById(a).innerHTML = "已上传";
+                    }
+                    // 处理数据，如果返回的数据就是json格式的，直接使用.就可以取得，例如data.msg、data.success.phone等
+                }
+            })
+        });
+    }
+    function update(a,b) {
+        layui.use(['layer', 'form', 'table', 'util', 'admin', 'func', 'HttpRequest'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var table = layui.table;
+            var admin = layui.admin;
+            var HttpRequest = layui.HttpRequest;
+            var func = layui.func;
+            $.ajax({
+                contentType: 'application/json;charset=UTF-8',
+                type: "POST",
+                dataType: "json",
+                url: "/Properties/update?key="+a+"&value="+b,
+                success: function (data) {
+                    // 处理数据，如果返回的数据就是json格式的，直接使用.就可以取得，例如data.msg、data.success.phone等
+                }
+            })
+        });
+    }
+    function F_Open_dialog()
+    {
+        document.getElementById("uploadfile").click();
+    }
+    function Download()
+    {
+        let url = "${ctxPath}/模板.zip";
+        try {
+            var elemIF = document.createElement("iframe");
+            elemIF.src = url;
+            elemIF.style.display = "none";
+            document.body.appendChild(elemIF);
+        } catch (e) {
+            alert("下载异常！");
+        }
+    }
+</script>
+<script type="text/javascript">
+    var excelFile;
+    // 读取文件的内容
+    function showfile(obj) {
+        if(!obj.files) {
+            return;
+        }
+        var f = obj.files[0];
+        var reader = new FileReader();
+        reader.readAsBinaryString(f);
+        reader.onload = function(e) {
+            var data = e.target.result;
+            layui_table_id = XLSX.read(data, {
+                type: 'binary'
+            });
+            //只展示第一个表
+            var headers = new Array();
+            var str = XLSX.utils.sheet_to_json(layui_table_id.Sheets[layui_table_id.SheetNames[0]])
+            for(var key in str[0]){
+                headers.push(key)  //获取表头
+            }
+            if(btnId == null){
+                alert("请先选择对应的质量问题数据！")
+            }
+            if(btnId !=null){
+                switch (btnId){
+                    case 'b1':
+                        new1Data(headers,str);
+                        break
+                    case 'b2':
+                        new2Data(headers,str);
+                        break;
+                    case 'b3':
+                        new3Data(headers,str);
+                        break
+                    case 'b4':
+                        new4Data(headers,str);
+                        break
+                    case 'b5':
+                        new5Data(headers,str);
+                        break
+                    case 'b6':
+                        new6Data(headers,str);
+                        break
+                    case 'b7':
+                        new7Data(headers,str);
+                        break
+                    case 'b8':
+                        new8Data(headers,str);
+                        break
+                    case 'b9':
+                        new9Data(headers,str);
+                        break
+                    default:
+                        alert("请不要点击未上传或者已上传！");
+                }
+            }
+            document.getElementById("uploadfile").value = ""
+        }
+    }
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        var s =[year, month, day].join('-')
+        if(s=="NaN-NaN-NaN"){
+            s="1949-01-01"
+        }
+        return s
+    }
+</script>
+<script>
+    function new1Data(headers,str)
+    {
+        layui.use(['layer', 'form', 'table', 'util', 'admin', 'func', 'HttpRequest'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var table = layui.table;
+            var admin = layui.admin;
+            var HttpRequest = layui.HttpRequest;
+            var func = layui.func;
+            var dataList = []
+
+            var myRequest0 = new HttpRequest("/new1qualityProblemData/getId", 'post', function (data) {
+                // 这里写请求成功的回调
+                console.log(data)
+
+                for (let i = 0; i < data.data.length; i++) {
+                    dataList.push(parseInt(data.data[i].quality_id))
+                }
+
+            }, function (data) {
+                // 这里写请求失败的回调（一般为http状态码为非200）
+            });
+            myRequest0.start(true);
+            var a1=[]
+            for(var a =1;;a++){
+                if(dataList.indexOf(a) == -1){
+                    a1.push(a)
+                }
+                if(a1.length==str.length){
+                    break;
+                }
+            }
+            var aa = []
+            var b = ""
+            for(var ii=0;ii<str.length;ii++){
+                var j = str[ii]
+                var date1 = formatDate(j[headers[5]])
+                var date2 = formatDate(j[headers[6]])
+                var date3 = formatDate(j[headers[13]])
+                var date4 = formatDate(j[headers[19]])
+                var date5 = formatDate(j[headers[25]])
+                b = { "qualityId":a1[ii],"title":j[headers[1]],"jx":j[headers[2]],"zbUnit": j[headers[3]], "zbBatch": j[headers[4]], "zbDeliverytime": date1, "time": date2, "zbTroop": j[headers[7]], "faultypartsType": j[headers[8]], "faultypartsTitle": j[headers[9]], "faultpartsModel": j[headers[10]], "faultpartsUnit": j[headers[11]], "faultpartsBatch": j[headers[12]], "faultpartsDeliverytime": date3, "faultpartsUsagetime": j[headers[14]], "faultPhenomenon": j[headers[15]], "failureMode": j[headers[16]], "environment": j[headers[17]], "zbFixed": j[headers[18]], "fixedTime": date4, "fixedFactory": j[headers[20]], "fixedPerson": j[headers[21]], "keyName": j[headers[22]], "keyFactory": j[headers[23]], "keyBatch": j[headers[24]], "keyDeliverytime": date5}
+                aa.push(b)
+            }
+            $.ajax({
+                contentType: 'application/json;charset=UTF-8',
+                type: "POST",
+                dataType: "json",
+                url: "/new1qualityProblemData/addData",
+                data: JSON.stringify(aa),
+                success: function (data) {
+                    layer.msg('上传成功');
+                    document.getElementById("t1").innerHTML = "已上传";
+                    update("t1",1)
+                    // 处理数据，如果返回的数据就是json格式的，直接使用.就可以取得，例如data.msg、data.success.phone等
+                }
+            })
+        });
+    }
+</script>
+<script>
+    function new2Data(headers,str)
+    {
+        layui.use(['layer', 'form', 'table', 'util', 'admin', 'func', 'HttpRequest'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var table = layui.table;
+            var admin = layui.admin;
+            var HttpRequest = layui.HttpRequest;
+            var func = layui.func;
+            var dataList = []
+
+            var myRequest0 = new HttpRequest("/new2equipmentDesignData/getId", 'post', function (data) {
+                // 这里写请求成功的回调
+                console.log(data)
+
+                for (let i = 0; i < data.data.length; i++) {
+                    dataList.push(parseInt(data.data[i].design_id))
+                }
+
+            }, function (data) {
+                // 这里写请求失败的回调（一般为http状态码为非200）
+            });
+            myRequest0.start(true);
+            var a1=[]
+            for(var a =1;;a++){
+                if(dataList.indexOf(a) == -1){
+                    a1.push(a)
+                }
+                if(a1.length==str.length){
+                    break;
+                }
+            }
+            var aa = []
+            var b = ""
+            for(var ii=0;ii<str.length;ii++){
+                var j = str[ii]
+                var date1 = formatDate(j[headers[2]])
+                b = { "designId":a1[ii],"jx":j[headers[1]],"zbModificationTime": date1, "zbModificationMeasures": j[headers[3]], "zbUnit": j[headers[4]]}
+                aa.push(b)
+
+            }
+            $.ajax({
+                contentType: 'application/json;charset=UTF-8',
+                type: "POST",
+                dataType: "json",
+                url: "/new2equipmentDesignData/addData",
+                data: JSON.stringify(aa),
+                success: function (data) {
+                    layer.msg('上传成功');
+                    document.getElementById("t2").innerHTML = "已上传";
+                    update("t2",1)
+                    // 处理数据，如果返回的数据就是json格式的，直接使用.就可以取得，例如data.msg、data.success.phone等
+                }
+            })
+
+        });
+    }
+</script>
+<script>
+    function new3Data(headers,str)
+    {
+        layui.use(['layer', 'form', 'table', 'util', 'admin', 'func', 'HttpRequest'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var table = layui.table;
+            var admin = layui.admin;
+            var HttpRequest = layui.HttpRequest;
+            var func = layui.func;
+            var dataList = []
+
+            var myRequest0 = new HttpRequest("/new3finishedProductDesignData/getId", 'post', function (data) {
+                // 这里写请求成功的回调
+                console.log(data)
+
+                for (let i = 0; i < data.data.length; i++) {
+                    dataList.push(parseInt(data.data[i].fin_design_id))
+                }
+
+            }, function (data) {
+                // 这里写请求失败的回调（一般为http状态码为非200）
+            });
+            myRequest0.start(true);
+            var a1=[]
+            for(var a =1;;a++){
+                if(dataList.indexOf(a) == -1){
+                    a1.push(a)
+                }
+                if(a1.length==str.length){
+                    break;
+                }
+            }
+            var aa = []
+            var b = ""
+            for(var ii=0;ii<str.length;ii++){
+                var j = str[ii]
+                var date1 = formatDate(j[headers[14]])
+                b = { "finDesignId":a1[ii],"jx":j[headers[1]],"productType":j[headers[2]],"productName": j[headers[3]], "productModel": j[headers[4]], "productFactory": j[headers[5]], "frame": j[headers[6]], "topMidBtm": j[headers[7]], "leftCenterRight": j[headers[8]], "installMethod": j[headers[9]], "antivibration": j[headers[10]], "humidityLimit": j[headers[11]], "temperatureLimit": j[headers[12]], "designStrength": j[headers[13]], "modifyTime": date1, "modifyMeasures": j[headers[15]], "similarOtherRelation": j[headers[17]]}
+                aa.push(b)
+
+            }
+            $.ajax({
+                contentType: 'application/json;charset=UTF-8',
+                type: "POST",
+                dataType: "json",
+                url: "/new3finishedProductDesignData/addData",
+                data: JSON.stringify(aa),
+                success: function (data) {
+                    layer.msg('上传成功');
+                    document.getElementById("t3").innerHTML = "已上传";
+                    update("t3",1)
+                    // 处理数据，如果返回的数据就是json格式的，直接使用.就可以取得，例如data.msg、data.success.phone等
+                }
+            })
+        });
+    }
+</script>
+<script>
+    function new4Data(headers,str)
+    {
+        layui.use(['layer', 'form', 'table', 'util', 'admin', 'func', 'HttpRequest'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var table = layui.table;
+            var admin = layui.admin;
+            var HttpRequest = layui.HttpRequest;
+            var func = layui.func;
+            var dataList = []
+
+            var myRequest0 = new HttpRequest("/new4keypartsDesigndata/getId", 'post', function (data) {
+                // 这里写请求成功的回调
+                console.log(data)
+
+                for (let i = 0; i < data.data.length; i++) {
+                    dataList.push(parseInt(data.data[i].keydesign_id))
+                }
+
+            }, function (data) {
+                // 这里写请求失败的回调（一般为http状态码为非200）
+            });
+            myRequest0.start(true);
+            var a1=[]
+            for(var a =1;;a++){
+                if(dataList.indexOf(a) == -1){
+                    a1.push(a)
+                }
+                if(a1.length==str.length){
+                    break;
+                }
+            }
+            var aa = []
+            var b = ""
+            for(var ii=0;ii<str.length;ii++){
+                var j = str[ii]
+                b = { "keydesignId":a1[ii],"jx":j[headers[1]],"faultypartsTitle":j[headers[2]],"faultpartsModel": j[headers[3]], "keyName": j[headers[4]]}
+                aa.push(b)
+
+            }
+            $.ajax({
+                contentType: 'application/json;charset=UTF-8',
+                type: "POST",
+                dataType: "json",
+                url: "/new4keypartsDesigndata/addData",
+                data: JSON.stringify(aa),
+                success: function (data) {
+                    layer.msg('上传成功');
+                    document.getElementById("t4").innerHTML = "已上传";
+                    update("t4",1)
+                    // 处理数据，如果返回的数据就是json格式的，直接使用.就可以取得，例如data.msg、data.success.phone等
+                }
+            })
+        });
+    }
+</script>
+<script>
+    function new5Data(headers,str)
+    {
+        layui.use(['layer', 'form', 'table', 'util', 'admin', 'func', 'HttpRequest'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var table = layui.table;
+            var admin = layui.admin;
+            var HttpRequest = layui.HttpRequest;
+            var func = layui.func;
+            var dataList = []
+
+            var myRequest0 = new HttpRequest("/new5finishedproductManufacturingdata/getId", 'post', function (data) {
+                // 这里写请求成功的回调
+                console.log(data)
+
+                for (let i = 0; i < data.data.length; i++) {
+                    dataList.push(parseInt(data.data[i].faulty_id))
+                }
+
+            }, function (data) {
+                // 这里写请求失败的回调（一般为http状态码为非200）
+            });
+            myRequest0.start(true);
+            var a1=[]
+            for(var a =1;;a++){
+                if(dataList.indexOf(a) == -1){
+                    a1.push(a)
+                }
+                if(a1.length==str.length){
+                    break;
+                }
+            }
+            var aa = []
+            var b = ""
+            for(var ii=0;ii<str.length;ii++){
+                var j = str[ii]
+                b = { "faultyId":a1[ii],"faultypartsTitle":j[headers[1]],"faultpartsModel":j[headers[2]],"faultpartsUnit": j[headers[3]], "faultpartsBatch": j[headers[4]], "faultpartsPerson": j[headers[5]], "faultpartsEquipment": j[headers[6]], "faultpartsMaterialsSource": j[headers[7]]}
+                aa.push(b)
+
+            }
+            $.ajax({
+                contentType: 'application/json;charset=UTF-8',
+                type: "POST",
+                dataType: "json",
+                url: "/new5finishedproductManufacturingdata/addData",
+                data: JSON.stringify(aa),
+                success: function (data) {
+                    layer.msg('上传成功');
+                    document.getElementById("t5").innerHTML = "已上传";
+                    update("t5",1)
+                    // 处理数据，如果返回的数据就是json格式的，直接使用.就可以取得，例如data.msg、data.success.phone等
+                }
+            })
+        });
+    }
+</script>
+<script>
+    function new6Data(headers,str)
+    {
+        layui.use(['layer', 'form', 'table', 'util', 'admin', 'func', 'HttpRequest'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var table = layui.table;
+            var admin = layui.admin;
+            var HttpRequest = layui.HttpRequest;
+            var func = layui.func;
+            var dataList = []
+
+            var myRequest0 = new HttpRequest("/new6keypartsManufacturingdata/getId", 'post', function (data) {
+                // 这里写请求成功的回调
+                console.log(data)
+
+                for (let i = 0; i < data.data.length; i++) {
+                    dataList.push(parseInt(data.data[i].key_id))
+                }
+
+            }, function (data) {
+                // 这里写请求失败的回调（一般为http状态码为非200）
+            });
+            myRequest0.start(true);
+            var a1=[]
+            for(var a =1;;a++){
+                if(dataList.indexOf(a) == -1){
+                    a1.push(a)
+                }
+                if(a1.length==str.length){
+                    break;
+                }
+            }
+            var aa = []
+            var b = ""
+            for(var ii=0;ii<str.length;ii++){
+                var j = str[ii]
+                var date1 = formatDate(j[headers[8]])
+                b = { "keyId":a1[ii],"faultypartsTitle":j[headers[1]],"keyName":j[headers[2]],"keyFactory": j[headers[3]], "keyBatch": j[headers[4]], "keyTestdata": j[headers[5]], "keyTestperson": j[headers[6]], "keyTestequiment": j[headers[7]], "keyTestlasttime": date1,"keyTesttype":j[headers[9]]}
+                aa.push(b)
+
+            }
+            $.ajax({
+                contentType: 'application/json;charset=UTF-8',
+                type: "POST",
+                dataType: "json",
+                url: "/new6keypartsManufacturingdata/addData",
+                data: JSON.stringify(aa),
+                success: function (data) {
+                    layer.msg('上传成功');
+                    document.getElementById("t6").innerHTML = "已上传";
+                    update("t6",1)
+                    // 处理数据，如果返回的数据就是json格式的，直接使用.就可以取得，例如data.msg、data.success.phone等
+                }
+            })
+        });
+    }
+</script>
+<script>
+    function new7Data(headers,str)
+    {
+        layui.use(['layer', 'form', 'table', 'util', 'admin', 'func', 'HttpRequest'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var table = layui.table;
+            var admin = layui.admin;
+            var HttpRequest = layui.HttpRequest;
+            var func = layui.func;
+            var dataList = []
+
+            var myRequest0 = new HttpRequest("/new7experimentalDataOfFaultyParts/getId", 'post', function (data) {
+                // 这里写请求成功的回调
+                console.log(data)
+
+                for (let i = 0; i < data.data.length; i++) {
+                    dataList.push(parseInt(data.data[i].Experimental_data_of_faulty_parts_id))
+                }
+
+            }, function (data) {
+                // 这里写请求失败的回调（一般为http状态码为非200）
+            });
+            myRequest0.start(true);
+            var a1=[]
+            for(var a =1;;a++){
+                if(dataList.indexOf(a) == -1){
+                    a1.push(a)
+                }
+                if(a1.length==str.length){
+                    break;
+                }
+            }
+            var aa = []
+            var b = ""
+            for(var ii=0;ii<str.length;ii++){
+                var j = str[ii]
+                b = { "experimentalDataOfFaultyPartsId":a1[ii],"jx":j[headers[1]],"equipmentName":j[headers[2]],"experimentType": j[headers[3]], "experimentInput": j[headers[4]], "tsetType": j[headers[5]], "testInput": j[headers[6]]}
+                aa.push(b)
+
+            }
+            $.ajax({
+                contentType: 'application/json;charset=UTF-8',
+                type: "POST",
+                dataType: "json",
+                url: "/new7experimentalDataOfFaultyParts/addData",
+                data: JSON.stringify(aa),
+                success: function (data) {
+                    layer.msg('上传成功');
+                    document.getElementById("t7").innerHTML = "已上传";
+                    update("t7",1)
+                    // 处理数据，如果返回的数据就是json格式的，直接使用.就可以取得，例如data.msg、data.success.phone等
+                }
+            })
+        });
+    }
+</script>
+<script>
+    function new8Data(headers,str)
+    {
+        layui.use(['layer', 'form', 'table', 'util', 'admin', 'func', 'HttpRequest'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var table = layui.table;
+            var admin = layui.admin;
+            var HttpRequest = layui.HttpRequest;
+            var func = layui.func;
+            var dataList = []
+
+            var myRequest0 = new HttpRequest("/new8equipmentDeploymentData/getId", 'post', function (data) {
+                // 这里写请求成功的回调
+                console.log(data)
+
+                for (let i = 0; i < data.data.length; i++) {
+                    dataList.push(parseInt(data.data[i].Equipment_deployment_data_id))
+                }
+
+            }, function (data) {
+                // 这里写请求失败的回调（一般为http状态码为非200）
+            });
+            myRequest0.start(true);
+            var a1=[]
+            for(var a =1;;a++){
+                if(dataList.indexOf(a) == -1){
+                    a1.push(a)
+                }
+                if(a1.length==str.length){
+                    break;
+                }
+            }
+            var aa = []
+            var b = ""
+            for(var ii=0;ii<str.length;ii++){
+                var j = str[ii]
+                var date1 = formatDate(j[headers[3]])
+                b = { "equipmentDeploymentDataId":a1[ii],"jx":j[headers[1]],"troop":j[headers[2]],"deplomentTime": date1, "deplomentNumber": j[headers[4]]}
+                aa.push(b)
+
+            }
+            $.ajax({
+                contentType: 'application/json;charset=UTF-8',
+                type: "POST",
+                dataType: "json",
+                url: "/new8equipmentDeploymentData/addData",
+                data: JSON.stringify(aa),
+                success: function (data) {
+                    layer.msg('上传成功');
+                    document.getElementById("t8").innerHTML = "已上传";
+                    update("t8",1)
+                    // 处理数据，如果返回的数据就是json格式的，直接使用.就可以取得，例如data.msg、data.success.phone等
+                }
+            })
+        });
+    }
+</script>
+<script>
+    function new9Data(headers,str)
+    {
+        layui.use(['layer', 'form', 'table', 'util', 'admin', 'func', 'HttpRequest'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var table = layui.table;
+            var admin = layui.admin;
+            var HttpRequest = layui.HttpRequest;
+            var func = layui.func;
+            var dataList = []
+
+            var myRequest0 = new HttpRequest("/new9zbUseData/getId", 'post', function (data) {
+                // 这里写请求成功的回调
+                console.log(data)
+
+                for (let i = 0; i < data.data.length; i++) {
+                    dataList.push(parseInt(data.data[i].ZB_use_data_id))
+                }
+
+            }, function (data) {
+                // 这里写请求失败的回调（一般为http状态码为非200）
+            });
+            myRequest0.start(true);
+            var a1=[]
+            for(var a =1;;a++){
+                if(dataList.indexOf(a) == -1){
+                    a1.push(a)
+                }
+                if(a1.length==str.length){
+                    break;
+                }
+            }
+            var aa = []
+            var b = ""
+            for(var ii=0;ii<str.length;ii++){
+                var j = str[ii]
+                var date1 = formatDate(j[headers[1]])
+                b = { "zbUseDataId":a1[ii],"yearmonth":date1,"jx":j[headers[2]],"troop": j[headers[3]], "flyHours": j[headers[4]], "taskType": j[headers[5]], "taskFrequency": j[headers[6]]}
+                aa.push(b)
+
+            }
+            $.ajax({
+                contentType: 'application/json;charset=UTF-8',
+                type: "POST",
+                dataType: "json",
+                url: "/new9zbUseData/addData",
+                data: JSON.stringify(aa),
+                success: function (data) {
+                    layer.msg('上传成功');
+                    document.getElementById("t9").innerHTML = "已上传";
+                    update("t9",1)
+                    // 处理数据，如果返回的数据就是json格式的，直接使用.就可以取得，例如data.msg、data.success.phone等
+                }
+            })
+        });
+    }
+</script>
+<script type="text/javascript">
+    var table = layui.table
+        ,form = layui.form;
+    function tableShow1 (){
+        layui.use('table', function () {  // 引入 table模块
+            table.render({
+                id:"dataTable",//
+                elem: '#layui_table_id',//指定表格元素
+                url: '/new1qualityProblemData/listall',  //请求路径
+                cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                ,skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                //,even: true    //隔行换色
+                ,page: true  //开启分页
+                ,limits: [5,10,15]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
+                ,limit: 5 //每页默认显示的数量
+                ,method:'get'  //提交方式
+                ,cols: [[
+                    {type:'checkbox'}, //开启多选框
+                    {
+                        field: 'qualityId', //json对应的key
+                        title: '序号',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'title', //json对应的key
+                        title: '质量问题标题',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'jx', //json对应的key
+                        title: '机型',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'zbUnit', //json对应的key
+                        title: '装备制造单位',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'zbBatch', //json对应的key
+                        title: '装备制造批次',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'zbDeliverytime', //json对应的key
+                        title: '装备出厂时间',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'time', //json对应的key
+                        title: '发生时间',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'zbTroop', //json对应的key
+                        title: '装备使用部队',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultypartsType', //json对应的key
+                        title: '故障件种类',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultypartsTitle', //json对应的key
+                        title: '故障件名称',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsModel', //json对应的key
+                        title: '故障件型号',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsUnit', //json对应的key
+                        title: '故障件制造单位',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsBatch', //json对应的key
+                        title: '故障件制造批次',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsDeliverytime', //json对应的key
+                        title: '故障件出厂时间',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsUsagetime', //json对应的key
+                        title: '故障件使用时长',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultPhenomenon', //json对应的key
+                        title: '故障现象',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'failureMode', //json对应的key
+                        title: '故障模式',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'environment', //json对应的key
+                        title: '发生地理环境',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'zbFixed', //json对应的key
+                        title: 'ZB是否进行过大修',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'fixedTime', //json对应的key
+                        title: '大修时间',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'fixedFactory', //json对应的key
+                        title: '大修厂',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'fixedPerson', //json对应的key
+                        title: '大修人员',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'keyName', //json对应的key
+                        title: '关键件名称',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'keyFactory', //json对应的key
+                        title: '关键件制造单位',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'keyBatch', //json对应的key
+                        title: '关键件制造批次',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'keyDeliverytime', //json对应的key
+                        title: '关键件出厂时间',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    }
+
+                ]]
+            });
+        });
+    }
+    function tableShow2 (){
+        layui.use('table', function () {  // 引入 table模块
+            table.render({
+                id:"dataTable",//
+                elem: '#layui_table_id',//指定表格元素
+                url: '/new2equipmentDesignData/listall',  //请求路径
+                cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                ,skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                //,even: true    //隔行换色
+                ,page: true  //开启分页
+                ,limits: [5,10,15]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
+                ,limit: 5 //每页默认显示的数量
+                ,method:'get'  //提交方式
+                ,cols: [[
+                    {type:'checkbox'}, //开启多选框
+                    {
+                        field: 'designId', //json对应的key
+                        title: '序号',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'jx', //json对应的key
+                        title: '机型',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'zbModificationTime', //json对应的key
+                        title: '装备改型时间',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'zbModificationMeasures', //json对应的key
+                        title: '装备改型措施',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'zbUnit', //json对应的key
+                        title: '装备制造单位',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                ]]
+            });
+        });
+    }
+    function tableShow3 (){
+        layui.use('table', function () {  // 引入 table模块
+            table.render({
+                id:"dataTable",//
+                elem: '#layui_table_id',//指定表格元素
+                url: '/new3finishedProductDesignData/listall',  //请求路径
+                cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                ,skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                //,even: true    //隔行换色
+                ,page: true  //开启分页
+                ,limits: [5,10,15]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
+                ,limit: 5 //每页默认显示的数量
+                ,method:'get'  //提交方式
+                ,cols: [[
+                    {type:'checkbox'}, //开启多选框
+                    {
+                        field: 'finDesignId', //json对应的key
+                        title: '序号',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'jx', //json对应的key
+                        title: '机型',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'productType', //json对应的key
+                        title: '成品件种类',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'productName', //json对应的key
+                        title: '成品件名称',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'productModel', //json对应的key
+                        title: '成品件型号',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'productFactory', //json对应的key
+                        title: '成品件制造单位',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'frame', //json对应的key
+                        title: '框',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'topMidBtm', //json对应的key
+                        title: '上中下',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'leftCenterRight', //json对应的key
+                        title: '左中右',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'installMethod', //json对应的key
+                        title: '成品件安装方法',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'antivibration', //json对应的key
+                        title: '抗振设计参数',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'humidityLimit', //json对应的key
+                        title: '工作湿度限制',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'temperatureLimit', //json对应的key
+                        title: '工作温度限制',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'designStrength', //json对应的key
+                        title: '强度设计参数',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'modifyTime', //json对应的key
+                        title: '成品件改型时间',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'modifyMeasures', //json对应的key
+                        title: '成品件改型措施',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'similarOtherRelation', //json对应的key
+                        title: '与相似成品件关系',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                ]]
+            });
+        });
+    }
+    function tableShow4 (){
+        layui.use('table', function () {  // 引入 table模块
+            table.render({
+                id:"dataTable",//
+                elem: '#layui_table_id',//指定表格元素
+                url: '/new4keypartsDesigndata/listall',  //请求路径
+                cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                ,skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                //,even: true    //隔行换色
+                ,page: true  //开启分页
+                ,limits: [5,10,15]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
+                ,limit: 5 //每页默认显示的数量
+                ,method:'get'  //提交方式
+                ,cols: [[
+                    {type:'checkbox'}, //开启多选框
+                    {
+                        field: 'keydesignId', //json对应的key
+                        title: '序号',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'jx', //json对应的key
+                        title: '机型',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultypartsTitle', //json对应的key
+                        title: '故障件名称',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsModel', //json对应的key
+                        title: '故障件型号',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'keyName', //json对应的key
+                        title: '关键键名称',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                ]]
+            });
+        });
+    }
+    function tableShow5 (){
+        layui.use('table', function () {  // 引入 table模块
+            table.render({
+                id:"dataTable",//
+                elem: '#layui_table_id',//指定表格元素
+                url: '/new5finishedproductManufacturingdata/listall',  //请求路径
+                cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                ,skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                //,even: true    //隔行换色
+                ,page: true  //开启分页
+                ,limits: [5,10,15]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
+                ,limit: 5 //每页默认显示的数量
+                ,method:'get'  //提交方式
+                ,cols: [[
+                    {type:'checkbox'}, //开启多选框
+                    {
+                        field: 'faultyId', //json对应的key
+                        title: '序号',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultypartsTitle', //json对应的key
+                        title: '故障件名称',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsModel', //json对应的key
+                        title: '故障件型号',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsUnit', //json对应的key
+                        title: '故障件制造单位',  //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsBatch', //json对应的key
+                        title: '故障件制造批次',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsPerson', //json对应的key
+                        title: '故障件制造人员',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsEquipment', //json对应的key
+                        title: '故障件加工设备',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsMaterialsSource', //json对应的key
+                        title: '故障件材料来源',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                ]]
+            });
+        });
+    }
+    function tableShow6 (){
+        layui.use('table', function () {  // 引入 table模块
+            table.render({
+                id:"dataTable",//
+                elem: '#layui_table_id',//指定表格元素
+                url: '/new6keypartsManufacturingdata/listall',  //请求路径
+                cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                ,skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                //,even: true    //隔行换色
+                ,page: true  //开启分页
+                ,limits: [5,10,15]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
+                ,limit: 5 //每页默认显示的数量
+                ,method:'get'  //提交方式
+                ,cols: [[
+                    {type:'checkbox'}, //开启多选框
+                    {
+                        field: 'keyId', //json对应的key
+                        title: '序号',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultypartsTitle', //json对应的key
+                        title: '故障件名称',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'keyName', //json对应的key
+                        title: '关键件名称',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'keyFactory', //json对应的key
+                        title: '关键件制造单位',  //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'keyBatch', //json对应的key
+                        title: '关键件批次',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'keyTestdata', //json对应的key
+                        title: '关键件检测数据',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'keyTestperson', //json对应的key
+                        title: '关键件检测人员',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'keyTestequiment', //json对应的key
+                        title: '关键件检测设备',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'keyTestlasttime', //json对应的key
+                        title: '关键件检测设备上次检测时间',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    }
+                ]]
+            });
+        });
+    }
+    function tableShow7 (){
+        layui.use('table', function () {  // 引入 table模块
+            table.render({
+                id:"dataTable",//
+                elem: '#layui_table_id',//指定表格元素
+                url: '/new7experimentalDataOfFaultyParts/listall',  //请求路径
+                cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                ,skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                //,even: true    //隔行换色
+                ,page: true  //开启分页
+                ,limits: [5,10,15]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
+                ,limit: 5 //每页默认显示的数量
+                ,method:'get'  //提交方式
+                ,cols: [[
+                    {type:'checkbox'}, //开启多选框
+                    {
+                        field: 'experimentalDataOfFaultyPartsId', //json对应的key
+                        title: '序号',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'jx', //json对应的key
+                        title: '机型',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'equipmentName', //json对应的key
+                        title: '设备名称',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'experimentType', //json对应的key
+                        title: '试验种类',  //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'experimentInput', //json对应的key
+                        title: '试验输入',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'tsetType', //json对应的key
+                        title: '实测种类',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'testInput', //json对应的key
+                        title: '实测输入',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    }
+                ]]
+            });
+        });
+    }
+    function tableShow8 (){
+        layui.use('table', function () {  // 引入 table模块
+            table.render({
+                id:"dataTable",//
+                elem: '#layui_table_id',//指定表格元素
+                url: '/new8equipmentDeploymentData/listall',  //请求路径
+                cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                ,skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                //,even: true    //隔行换色
+                ,page: true  //开启分页
+                ,limits: [5,10,15]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
+                ,limit: 5 //每页默认显示的数量
+                ,method:'get'  //提交方式
+                ,cols: [[
+                    {type:'checkbox'}, //开启多选框
+                    {
+                        field: 'equipmentDeploymentDataId', //json对应的key
+                        title: '序号',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'jx', //json对应的key
+                        title: '机型',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'troop', //json对应的key
+                        title: '部队',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'deplomentTime', //json对应的key
+                        title: '部署时间',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'deplomentNumber', //json对应的key
+                        title: '部署数量',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                ]]
+            });
+        });
+    }
+    function tableShow9 (){
+        layui.use('table', function () {  // 引入 table模块
+            table.render({
+                id:"dataTable",//
+                elem: '#layui_table_id',//指定表格元素
+                url: '/new9zbUseData/listall',  //请求路径
+                cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                ,skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                //,even: true    //隔行换色
+                ,page: true  //开启分页
+                ,limits: [5,10,15]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
+                ,limit: 5 //每页默认显示的数量
+                ,method:'get'  //提交方式
+                ,cols: [[
+                    {type:'checkbox'}, //开启多选框
+                    {
+                        field: 'zbUseDataId', //json对应的key
+                        title: '序号',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'yearmonth', //json对应的key
+                        title: '年月',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'jx', //json对应的key
+                        title: '机型',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'troop', //json对应的key
+                        title: '部队',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'flyHours', //json对应的key
+                        title: '飞行小时',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'taskType', //json对应的key
+                        title: '执行任务种类',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'taskFrequency', //json对应的key
+                        title: '执行任务次数',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                ]]
+            });
+        });
+    }
+</script>
+<script type="text/javascript">
+    function jump(){
+        window.location.href="${ctxPath}/jump/toSecond";
+    };
+    function jump1(){
+        window.location.href="${ctxPath}/jump/toThird";
+    };
+    $('.box').on('click','.shbian',function(){
+        $(this).addClass("current").siblings().removeClass("current");
+    });
+    var btnId = null;
+    $(document).ready (function(){
+        $(".shbian").bind ("click" , function(){
+            btnId= $(this).attr('id');
+        })
+    });
+    var xq=$('.xq');
+    xq.on('click',function(){
+        if(btnId == null){
+            alert("请先选择对应的质量问题数据！")
+        }
+        if(btnId !=null){
+            switch (btnId){
+                case 'b1':
+                    tableShow1();
+                    break
+                case 'b2':
+                    tableShow2();
+                    break;
+                case 'b3':
+                    tableShow3();
+                    break
+                case 'b4':
+                    tableShow4();
+                    break
+                case 'b5':
+                    tableShow5();
+                    break
+                case 'b6':
+                    tableShow6();
+                    break
+                case 'b7':
+                    tableShow7();
+                    break
+                case 'b8':
+                    tableShow8();
+                    break
+                case 'b9':
+                    tableShow9();
+                    break
+            }
+        }
+
+    })
+</script>
+</body>
+</html>

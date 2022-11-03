@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>${constants.getSystemName()}</title>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/libs/layui/css/layui.css?v=${constants.getReleaseVersion()}"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/module/admin.css?v=${constants.getReleaseVersion()}"/>
+    <style>
+        .numberInfoSubTitle {
+            color: rgba(0, 0, 0, .45);
+            font-size: 14px;
+            height: 22px;
+            line-height: 22px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-break: break-all;
+        }
+
+        .numberInfoValue {
+            color: rgba(0, 0, 0, .85);
+            font-size: 24px;
+            margin-top: 10px;
+            height: 32px;
+            line-height: 32px;
+        }
+
+        .numberInfoSuffix {
+            color: rgba(0, 0, 0, .65);
+            font-size: 16px;
+            font-style: normal;
+            margin-left: 4px;
+            line-height: 32px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- 加载动画，移除位置在common.js中 -->
+<div class="page-loading">
+    <div class="ball-loader">
+        <span></span><span></span><span></span><span></span>
+    </div>
+</div>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-xs12 layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">基本特征分析 - 故障件制造人员</div>
+                <div class="layui-card-body" style="overflow: hidden;">
+                    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+                    <div id="main" style="height: 300px;margin-top: 20px;"></div>
+                    <div id="buttonDiv">
+                        <button id="nameButton"  style=" margin-left:35%;background-color: #01aaed;padding: 5px 10px;color: white; border: none;cursor: pointer;" class="layui-btn-normal">
+                            <span style="color: white">名称筛选</span>
+                        </button>
+                        <button id="versionButton"  style=" margin-left:20px;background-color: #01aaed;padding: 5px 10px;color: white; border: none;cursor: pointer;" class="layui-btn-normal">
+                            <span style="color: white">型号筛选</span>
+                        </button>
+                        <button id="batchButton"  style=" margin-left:20px;background-color: #01aaed;padding: 5px 10px;color: white; border: none;cursor: pointer;" class="layui-btn-normal">
+                            <span style="color: white">批次筛选</span>
+                        </button>
+                    </div>
+
+                    <hr/>
+                    <div   class="layui-card" style="background:#e2e2e2">
+                        <div id="tableTitle" class="layui-card-header">数据列表项:占总故障数量比例为0.2</div>
+                    </div>
+                    <table class="layui-table" id="layui_table_id" lay-filter="dataTable"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- js部分 -->
+@/* 加入contextPath属性和session超时的配置 */
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+
+
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.all.js"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+<script src="${ctxPath}/assets/common/libs/echarts/echarts.min.js?v=${constants.getReleaseVersion()}"></script>
+<script src="${ctxPath}/assets/common/libs/echarts/echartsTheme.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/jquery/jquery-3.2.1.min.js"></script>
+<script src="${ctxPath}/assets/common/libs/vue.js"></script>
+
+<script>
+    // 渲染图表
+    var myChart = echarts.init(document.getElementById('main'));
+    var table = layui.table
+        ,form = layui.form;
+    option = {
+
+        series: {
+            type: 'sankey',
+            layout: 'none',
+            emphasis: {
+                focus: 'adjacency'
+            },toolbox: {
+                show: true,
+                feature: {
+                    mark: { show: true },
+                    dataView: { show: true, readOnly: false },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            data: [
+                {
+                    name: 'a'
+                },
+                {
+                    name: 'b'
+                },
+                {
+                    name: 'a1'
+                },
+                {
+                    name: 'a2'
+                },
+                {
+                    name: 'b1'
+                },
+                {
+                    name: 'c'
+                }
+            ],
+            links: [
+                {
+                    source: 'a',
+                    target: 'a1',
+                    value: 5
+                },
+                {
+                    source: 'a',
+                    target: 'a2',
+                    value: 3
+                },
+                {
+                    source: 'b',
+                    target: 'b1',
+                    value: 1
+                },
+                {
+                    source: 'a',
+                    target: 'b1',
+                    value: 3
+                },
+                {
+                    source: 'b1',
+                    target: 'a1',
+                    value: 1
+                },
+                {
+                    source: 'b1',
+                    target: 'c',
+                    value: 2
+                }
+            ]
+        }
+    };
+    call("name");
+    tableShow("name");
+    function call(name){
+        $.get("/data/question35?condition="+name, function (obj) {
+            // alert(data.data.typeList);
+            option.series.data = obj.data;
+            option.series.links = obj.links;
+
+            myChart.setOption(option);
+        }, 'json');
+    }
+
+    // myChart.setOption(option);
+    $("#nameButton").click(function() {
+        call("name");
+        tableShow("name");
+    })
+    $("#versionButton").click(function() {
+        call("version");
+        tableShow("version");
+    })
+    $("#batchButton").click(function() {
+        call("batch");
+        tableShow("batch");
+    })
+
+
+    function tableShow (name){
+        layui.use('table', function () {  // 引入 table模块
+            table.render({
+                id:"dataTable",//
+                elem: '#layui_table_id',//指定表格元素
+                url: '/data/question35/table?rate='+0.2+"&&condition="+name,  //请求路径
+                cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                ,skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                //,even: true    //隔行换色
+                ,page: true  //开启分页
+                ,limits: [10,20,50]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
+                ,limit: 10 //每页默认显示的数量
+                ,method:'get'  //提交方式
+                ,cols: [[
+                    {type:'checkbox'}, //开启多选框
+                    {
+                        field: 'faultyId', //json对应的key
+                        title: '序号',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultypartsTitle', //json对应的key
+                        title: '故障件名称',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsModel', //json对应的key
+                        title: '故障件型号',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsUnit', //json对应的key
+                        title: '故障件制造单位',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsBatch', //json对应的key
+                        title: '故障件制造批次',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsPerson', //json对应的key
+                        title: '故障件制造人员',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsEquipment', //json对应的key
+                        title: '故障件加工设备',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    },
+                    {
+                        field: 'faultpartsMaterialsSource', //json对应的key
+                        title: '故障件原材料来源',   //列名
+                        sort: true   // 默认为 false,true为开启排序
+                    }
+
+                ]]
+            });
+        });
+    }
+
+
+
+
+    // 窗口大小改变事件
+    window.onresize = function () {
+        // myCharts.resize();
+        // myCharts2.resize();
+        myChart.resize();
+        // myCharts4.resize();
+    };
+</script>
+
+</body>
+
+</html>

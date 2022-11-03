@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>${constants.getSystemName()}</title>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/libs/layui/css/layui.css?v=${constants.getReleaseVersion()}"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/module/admin.css?v=${constants.getReleaseVersion()}"/>
+    <style>
+        .numberInfoSubTitle {
+            color: rgba(0, 0, 0, .45);
+            font-size: 14px;
+            height: 22px;
+            line-height: 22px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-break: break-all;
+        }
+
+        .numberInfoValue {
+            color: rgba(0, 0, 0, .85);
+            font-size: 24px;
+            margin-top: 10px;
+            height: 32px;
+            line-height: 32px;
+        }
+
+        .numberInfoSuffix {
+            color: rgba(0, 0, 0, .65);
+            font-size: 16px;
+            font-style: normal;
+            margin-left: 4px;
+            line-height: 32px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- 加载动画，移除位置在common.js中 -->
+<div class="page-loading">
+    <div class="ball-loader">
+        <span></span><span></span><span></span><span></span>
+    </div>
+</div>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+
+
+        <div class="layui-col-xs12 layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">基本特征分析 - 质量问题执行任务</div>
+                <div class="layui-card-body" style="overflow: hidden;">
+                    <div id="use">
+                        <button id="btnAdd" class="layui-btn icon-btn">年月切换</button>
+                    </div>
+                    <div id="xse" style="height: 300px;margin-top: 20px;"></div>
+                    <hr/>
+                    <div   class="layui-card" style="background:#e2e2e2">
+                        <div id="tableTitle" class="layui-card-header">数据列表项: 1.较上一时间增加或减少50%以上。 2.连续两个时间段增加或减少20%以上。3.连续三个时间段呈单调变化趋势。</div>
+                    </div>
+                    <table class="layui-table" id="layui_table_id" lay-filter="dataTable"></table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+</div>
+
+
+
+<!-- js部分 -->
+@/* 加入contextPath属性和session超时的配置 */
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+
+
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+<script src="${ctxPath}/assets/common/libs/echarts/echarts.min.js?v=${constants.getReleaseVersion()}"></script>
+<script src="${ctxPath}/assets/common/libs/echarts/echartsTheme.js?v=${constants.getReleaseVersion()}"></script>
+
+<script src="${ctxPath}/assets/common/libs/vue.js"></script>
+
+<script>
+    layui.use(['layer', 'form', 'table', 'util', 'admin', 'func', 'HttpRequest'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var table = layui.table;
+        var admin = layui.admin;
+        var HttpRequest = layui.HttpRequest;
+        var func = layui.func;
+
+        var dataList = []
+        //获取数据
+        // 发起http调用，第一个构造参数是请求的url，第二个参数是http method，第三个参数是请求成功回调，第四个是请求失败回调
+        var myRequest = new HttpRequest("/new9zbUseData/problem14", 'post', function (data) {
+            // 这里写请求成功的回调
+            console.log(data)
+            for (let i = 0; i < data.data.length; i++) {
+                dataList.push(data.data[i])
+            }
+        }, function (data) {
+            // 这里写请求失败的回调（一般为http状态码为非200）
+        });
+
+        // true代表请求的是json，false代表param方式传参
+        myRequest.start(true);
+
+        console.log(dataList)
+        var name = []
+        var date = ""
+        var xdate = []
+        var ndata = []
+        var year = []
+        var md = ""
+
+        for (let i = 0; i < dataList.length; i++) {
+            date = dataList[i].yearmonth.split("-")
+            if(xdate.indexOf(date[0]+date[1]) == -1){
+                xdate.push(date[0]+date[1])
+            }
+            if(year.indexOf(date[0]) == -1){
+                year.push(date[0])
+            }
+            if(name.indexOf(dataList[i].task_type) == -1){
+                name.push(dataList[i].task_type)
+            }
+            md = {name:dataList[i].task_type,year:date[0],time:date[0]+date[1]}
+            ndata.push(md)
+        }
+        var compare1 = function (x, y) {//比较函数
+            if (x < y) {
+                return -1;
+            } else if (x > y) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+        xdate.sort(compare1)
+        year.sort(compare1)
+
+        var fydata = new Array()
+        var ydata = new Array()
+        for (let i = 0; i < name.length; i++){
+            fydata[i] = new Array()
+            ydata[i] = new Array()
+            for (let j = 0; j < xdate.length; j++){
+                fydata[i][j]=0
+            }
+            for (let l = 0; l < year.length; l++){
+                ydata[i][l]=0
+            }
+        }
+        for (let i = 0; i < ndata.length; i++){
+            let a = name.indexOf(ndata[i].name)
+            let b = xdate.indexOf(ndata[i].time)
+            let c = year.indexOf(ndata[i].year)
+            ydata[a][c]++
+            fydata[a][b]++
+        }
+        var by = ""
+        var oy = []
+        var ym1 = ""
+        var ym2 = []
+        for (let i = 0; i < name.length; i++){
+            by = {name:name[i], type: 'bar',data: fydata[i]}
+            oy.push(by)
+            ym1 = {name:name[i], type: 'bar',data: ydata[i]}
+            ym2.push(ym1)
+        }
+
+
+
+        // 渲染图表
+        var myCharts3 = echarts.init(document.getElementById('xse'), myEchartsTheme);
+        var option = []
+        option[1] ={
+            title: {
+                text: '',
+                textStyle: {
+                    color: '#000',
+                    fontSize: 14
+                }
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: { show: true },
+                    dataView: { show: true, readOnly: false },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            legend: {
+                data: name
+            },
+            xAxis: {
+                name: '年月',
+                data: xdate
+            },
+            yAxis: {},
+            series: oy,
+            dataZoom: [
+                {   // 这个dataZoom组件，默认控制x轴。
+                    type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
+                    start: 10,      // 左边在 10% 的位置。
+                    end: 90         // 右边在 60% 的位置。
+                },
+                {   // 这个dataZoom组件，也控制x轴。
+                    type: 'inside', // 这个 dataZoom 组件是 inside 型 dataZoom 组件
+                    start: 10,      // 左边在 10% 的位置。
+                    end: 60         // 右边在 60% 的位置。
+                }
+
+            ],
+        };
+        option[0] ={
+            title: {
+                text: '',
+                textStyle: {
+                    color: '#000',
+                    fontSize: 14
+                }
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: { show: true },
+                    dataView: { show: true, readOnly: false },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            legend: {
+                data: name
+            },
+            xAxis: {
+                name: '年',
+                data: year
+            },
+            yAxis: {},
+            series: ym2,
+            dataZoom: [
+                {   // 这个dataZoom组件，默认控制x轴。
+                    type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
+                    start: 10,      // 左边在 10% 的位置。
+                    end: 90         // 右边在 60% 的位置。
+                },
+                {   // 这个dataZoom组件，也控制x轴。
+                    type: 'inside', // 这个 dataZoom 组件是 inside 型 dataZoom 组件
+                    start: 10,      // 左边在 10% 的位置。
+                    end: 60         // 右边在 60% 的位置。
+                }
+
+            ],
+        };
+        var num =0
+        myCharts3.setOption(option[num])
+        var first = []
+        for(let i = 0; i < name.length; i++){
+            for(let j = 0; j < xdate.length; j++){
+                if(fydata[i][j]!=0){
+                    first.push(j)
+                    break
+                }
+            }
+        }
+
+        var n = []
+        var tr = []
+        for(let i = 0; i < name.length; i++){
+            for(let j = 0; j < xdate.length; j++){
+                if(j>0&&fydata[i][j]>fydata[i][j-1]*1.5&&j!=first[i]){
+                    n.push(name[i])
+                    tr.push(xdate[j])
+                }
+                if(j>0&&fydata[i][j]<fydata[i][j-1]*0.5&&j!=first[i]){
+                    n.push(name[i])
+                    tr.push(xdate[j])
+                }
+                if(j+2<xdate.length&&fydata[i][j+1]>fydata[i][j]*1.2&&fydata[i][j+2]>fydata[i][j+1]*1.2){
+                    n.push(name[i])
+                    tr.push(xdate[j])
+                }
+                if(j+2<xdate.length&&fydata[i][j+1]<fydata[i][j]*0.8&&fydata[i][j+2]<fydata[i][j+1]*0.8){
+                    n.push(name[i])
+                    tr.push(xdate[j])
+                }
+                if(j+3<xdate.length&&fydata[i][j+1]>fydata[i][j]&&fydata[i][j+2]>fydata[i][j+1]&&fydata[i][j+3]>fydata[i][j+2]){
+                    n.push(name[i])
+                    tr.push(xdate[j])
+                }
+                if(j+3<xdate.length&&fydata[i][j+1]<fydata[i][j]&&fydata[i][j+2]<fydata[i][j+1]&&fydata[i][j+3]<fydata[i][j+2]){
+                    n.push(name[i])
+                    tr.push(xdate[j])
+                }
+            }
+        }
+        table.render({
+            id:"dataTable",//
+            elem: '#layui_table_id',//
+            url: '/new9zbUseData/question14/table?s='+tr+'&t='+n,  //请求路径
+            cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+            ,page: true  //开启分页
+            ,limits: [10,20,50]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
+            ,limit: 10 //每页默认显示的数量
+            ,method:'get'  //提交方式
+            ,cols: [[
+                {type:'checkbox'}, //开启多选框
+                {
+                    field: 'zbUseDataId', //json对应的key
+                    title: '装备使用数据序号',   //列名
+                    sort: true   // 默认为 false,true为开启排序
+                },
+                {
+                    field: 'yearmonth', //json对应的key
+                    title: '年月',   //列名
+                    sort: true   // 默认为 false,true为开启排序
+                },
+                {
+                    field: 'jx', //json对应的key
+                    title: '机型',   //列名
+                    sort: true   // 默认为 false,true为开启排序
+                },
+                {
+                    field: 'troop', //json对应的key
+                    title: '部队',   //列名
+                    sort: true   // 默认为 false,true为开启排序
+                },
+                {
+                    field: 'flyHours', //json对应的key
+                    title: '飞行小时',   //列名
+                    sort: true   // 默认为 false,true为开启排序
+                },
+                {
+                    field: 'taskType', //json对应的key
+                    title: '执行任务种类',   //列名
+                    sort: true   // 默认为 false,true为开启排序
+                },
+                {
+                    field: 'taskFrequency', //json对应的key
+                    title: '执行任务次数',   //列名
+                    sort: true   // 默认为 false,true为开启排序
+                }
+
+            ]]
+        });
+        // 窗口大小改变事件
+        window.onresize = function () {
+            myCharts3.resize();
+        };
+        $('#btnAdd').click(function () {
+            num++
+            if(num==2){
+                num =0
+            }
+            myCharts3.setOption(option[num])
+            return true;
+        });
+
+    });
+</script>
+</body>
+
+</html>

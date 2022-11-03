@@ -1,0 +1,26 @@
+{
+  "name" : "NewTest",
+  "preName" : "",
+  "comment" : null,
+  "templateGroupName" : "MybatisPlus",
+  "fullColumn" : [ {
+    "name" : "id",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  }, {
+    "name" : "name",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  } ],
+  "pkColumn" : null,
+  "otherColumn" : null,
+  "savePackageName" : "cn.stylefeng.guns.modular.demo",
+  "savePath" : "./src/main/java/cn/stylefeng/guns/modular/demo",
+  "saveModelName" : "guns"
+}

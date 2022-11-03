@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>${constants.getSystemName()}</title>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/libs/layui/css/layui.css?v=${constants.getReleaseVersion()}"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/module/admin.css?v=${constants.getReleaseVersion()}"/>
+    <style>
+        .numberInfoSubTitle {
+            color: rgba(0, 0, 0, .45);
+            font-size: 14px;
+            height: 22px;
+            line-height: 22px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-break: break-all;
+        }
+
+        .numberInfoValue {
+            color: rgba(0, 0, 0, .85);
+            font-size: 24px;
+            margin-top: 10px;
+            height: 32px;
+            line-height: 32px;
+        }
+
+        .numberInfoSuffix {
+            color: rgba(0, 0, 0, .65);
+            font-size: 16px;
+            font-style: normal;
+            margin-left: 4px;
+            line-height: 32px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- 加载动画，移除位置在common.js中 -->
+<div class="page-loading">
+    <div class="ball-loader">
+        <span></span><span></span><span></span><span></span>
+    </div>
+</div>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-xs12 layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">基本特征分析-故障件制造批次随时间变化情况</div>
+                <div class="layui-card-body" style="overflow: hidden;">
+                    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+                    <div id="main" style="height: 300px;margin-top: 20px;"></div>
+                    <button id="convertButton"  style=" margin-left:90%;background-color: #01aaed;padding: 5px 10px;color: white; border: none;cursor: pointer;" class="layui-btn-normal">
+                        <span style="color: white">年月筛选转换</span>
+                    </button>
+                    <input id="convertValue" value="year" type="hidden"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- js部分 -->
+@/* 加入contextPath属性和session超时的配置 */
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+
+
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+<script src="${ctxPath}/assets/common/libs/echarts/echarts.min.js?v=${constants.getReleaseVersion()}"></script>
+<script src="${ctxPath}/assets/common/libs/echarts/echartsTheme.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/jquery/jquery-3.2.1.min.js"></script>
+<script src="${ctxPath}/assets/common/libs/vue.js"></script>
+
+<script>
+        // 渲染图表
+        var myChart = echarts.init(document.getElementById('main'));
+        var option = {
+            color: ['#5F9EA0','#87CEEB', '#0000ff', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
+            title: {
+                // text: '故障件制造批次随时间变化情况 '
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: { show: true },
+                    dataView: { show: true, readOnly: false },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            // tooltip: {},
+            legend: {
+                data:['1','2','3'],
+                selectedMode : 'multiple',
+            },
+            xAxis: {
+                // data: data.data.monthList,
+                data:[2012,2013,2014,2015,2016],
+            },
+            yAxis: {},
+            series: [
+                // {
+                //     name: '1',
+                //     type: 'bar',
+                //     data: [3,6,9],
+                // },
+                // {
+                //     name: '2',
+                //     type: 'bar',
+                //     data: [12,11,36,11],
+                // },
+                // {
+                //     name: '3',
+                //     type: 'bar',
+                //     data: [55,99,222,1111,1221],
+                // },
+
+            ],
+            dataZoom: [
+                {   // 这个dataZoom组件，默认控制x轴。
+                    type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
+                    start: 10,      // 左边在 10% 的位置。
+                    end: 60         // 右边在 60% 的位置。
+                },
+                {   // 这个dataZoom组件，也控制x轴。
+                    type: 'inside', // 这个 dataZoom 组件是 inside 型 dataZoom 组件
+                    start: 10,      // 左边在 10% 的位置。
+                    end: 60         // 右边在 60% 的位置。
+                }
+
+            ],
+
+
+        }
+
+        $.get("/data/question32", function (obj) {
+            // alert(data.data.typeList);
+            option.xAxis.data=obj.monthList;
+            option.series=obj.series;
+            option.legend.data=obj.batchList;
+            myChart.setOption(option);
+        }, 'json')
+
+        $("#convertButton").click(function(){
+            let val = $("#convertValue").val();
+
+            if (val === 'month') {
+                $.get("/data/question32", function (obj) {
+                    // alert(data.data.typeList);
+                    option.xAxis.data=obj.monthList;
+                    option.series=obj.series;
+                    option.legend.data=obj.batchList;
+                    myChart.setOption(option);
+                }, 'json');
+                $("#convertValue").val('year');
+            }else{
+                $.get("/data/question32/year", function (obj) {
+                    // alert(data.data.typeList);
+                    option.xAxis.data=obj.monthList;
+                    option.series=obj.series;
+                    option.legend.data=obj.batchList;
+                    myChart.setOption(option);
+                }, 'json');
+                $("#convertValue").val('month');
+            }
+
+
+        })
+        // 窗口大小改变事件
+        window.onresize = function () {
+            // myCharts.resize();
+            // myCharts2.resize();
+            myChart.resize();
+            // myCharts4.resize();
+        };
+</script>
+
+</body>
+
+</html>

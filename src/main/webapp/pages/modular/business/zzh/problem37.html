@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>${constants.getSystemName()}</title>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/libs/layui/css/layui.css?v=${constants.getReleaseVersion()}"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/module/admin.css?v=${constants.getReleaseVersion()}"/>
+    <style>
+        .numberInfoSubTitle {
+            color: rgba(0, 0, 0, .45);
+            font-size: 14px;
+            height: 22px;
+            line-height: 22px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-break: break-all;
+        }
+
+        .numberInfoValue {
+            color: rgba(0, 0, 0, .85);
+            font-size: 24px;
+            margin-top: 10px;
+            height: 32px;
+            line-height: 32px;
+        }
+
+        .numberInfoSuffix {
+            color: rgba(0, 0, 0, .65);
+            font-size: 16px;
+            font-style: normal;
+            margin-left: 4px;
+            line-height: 32px;
+        }
+        .zhu{
+            margin-left: 125px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- 加载动画，移除位置在common.js中 -->
+<div class="page-loading">
+    <div class="ball-loader">
+        <span></span><span></span><span></span><span></span>
+    </div>
+</div>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+
+
+        <div class="layui-col-xs12 layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header" style="font-size: 15px;">基本特征分析 - 故障件原材料</div>
+                <!--图表容器 -->
+                <div class="layui-card-body" style="overflow: hidden;">
+                    <div id="xse" style="height: 500px;margin-left: calc(50% - 425px);width:1000px"></div>
+                    <div   class="layui-card" style="width: 735px;margin-top: -1%;margin-left: calc(50% - 367px);background:#e2e2e2">
+                        <div id="tableTitle" style="" class="layui-card-header">异常数据</div>
+                    </div>
+                    <!-- <div style="height: 30px;background-color:;width: 735px;margin-top: 2%;margin-left: calc(50% - 367px);"><label>异常数据</label></div> -->
+                    <div  style="height: 500px;width: 735px;margin-top: 4%;margin-left: calc(50% - 367px);">
+                        <div id="tab" style="height: 0px;margin-top: -5%;width: 735px;margin-left: calc(50% - 367px);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+</div>
+
+
+
+<!-- js部分 -->
+@/* 加入contextPath属性和session超时的配置 */
+<script type="text/javascript">
+    var Feng = {
+        ctxPath: "${ctxPath}",
+        version: '${constants.getReleaseVersion()}'
+    };
+</script>
+
+
+<script type="text/javascript" src="${ctxPath}/assets/common/libs/layui/layui.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/common/js/common.js?v=${constants.getReleaseVersion()}"></script>
+<script src="${ctxPath}/assets/common/libs/echarts/echarts.min.js?v=${constants.getReleaseVersion()}"></script>
+<script src="${ctxPath}/assets/common/libs/echarts/echartsTheme.js?v=${constants.getReleaseVersion()}"></script>
+
+<script src="${ctxPath}/assets/common/libs/vue.js"></script>
+
+<script>
+
+
+    layui.use(['layer', 'element','HttpRequest'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var element = layui.element;
+        var HttpRequest = layui.HttpRequest;
+        var dataList = [] ;
+        var name=[];
+        let symbol=1;
+        let avg;
+        let sum;
+        var wrong = [];
+        var wrongobj =[];
+        //获取数据
+        // 发起http调用，第一个构造参数是请求的url，第二个参数是http method，第三个参数是请求成功回调，第四个是请求失败回调
+        var myRequest = new HttpRequest("/new5finishedproductManufacturingdata/problem37", 'post', function (data) {
+            // 这里写请求成功的回调
+            console.log(data)
+
+            for (let i = 0; i < data.data.length; i++){
+                dataList.push(data.data[i])
+            }
+
+
+
+            console.log(dataList);
+            for (let i = 0,j=0; i < data.data.length; i++){
+                symbol=1;
+                for (let s = 0; s <=j; s++){
+                    if(name[s]!=null&&dataList[i].source==name[s].name){
+                        symbol=0;
+                        break;
+                    }
+                }
+                if(symbol==1){
+                    name[j]={name:dataList[i].source};
+                    j=j+1;
+                }
+                symbol=1;
+                for (let s = 0; s <= j; s++){
+                    if(name[s]!=null&&dataList[i].target==name[s].name){
+                        symbol=0;
+                        break;
+                    }
+                }
+                if(symbol==1){
+                    name[j]={name:dataList[i].target};
+                    j=j+1;
+                }
+            }
+            console.log(name);
+
+        }, function (data) {
+            // 这里写请求失败的回调（一般为http状态码为非200）
+        });
+
+        // 这里写请求的数据
+        // myRequest.set({
+        //  fieldA: "data"
+        // });
+
+
+
+        // true代表请求的是json，false代表param方式传参
+        myRequest.start(true);
+
+
+        // 渲染图表
+        const option = {
+            tooltip: {
+                trigger: 'item',
+                triggerOn: 'mousemove'
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: { show: true },
+                    dataView: { show: true, readOnly: false },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            animation: false,
+            series: [
+                {
+                    type: 'sankey',
+                    bottom: '10%',
+                    emphasis: {
+                        focus: 'adjacency'
+                    },
+                    data: name,
+                    links: dataList,
+                    orient: '',
+                    label: {
+                        position: 'top'
+                    },
+                    lineStyle: {
+                        color: 'source',
+                        curveness: 0.5
+                    }
+                }
+            ]
+        };
+
+        var chartDom = document.getElementById('xse');
+        var myChart = echarts.init(chartDom);
+        myChart.setOption(option);
+
+        // 窗口大小改变事件
+
+
+    });
+</script>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#tab'
+            ,height: 400
+            ,width:735
+
+            ,limit:8
+            ,url: '/new5finishedproductManufacturingdata/problem37tab' //数据接口
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {field: 'source', title:'关键件名称', width:245, sort: true, align: 'center'}
+                ,{field: 'target', title: '设备名称', width:245,align: 'center'}
+                ,{field: 'value', title: '质量问题数', width:245,align: 'center'}
+            ]]
+
+        });
+
+    });
+</script>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.1.2/echarts.min.js"> </script>
+
+
+</body>
+
+</html>
